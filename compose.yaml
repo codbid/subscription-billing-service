@@ -1,9 +1,23 @@
 services:
-  postgres:
-    image: 'postgres:latest'
+  postgres1:
+    image: postgres:latest
+    container_name: postgres1
     environment:
-      - 'POSTGRES_DB=mydatabase'
-      - 'POSTGRES_PASSWORD=secret'
-      - 'POSTGRES_USER=myuser'
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
     ports:
-      - '5432'
+      - "5432:5432"
+  app:
+    image: sbs
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres1
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres1:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 123
