@@ -16,7 +16,7 @@ public class PaymentEventListener {
 
     @KafkaListener(topics = "payment-events", groupId = "default", containerFactory = "kafkaListenerContainerFactory")
     public void listenPaymentEvent(PaymentEvent paymentEvent) {
-        if(paymentEvent.getStatus() == PaymentStatus.SUBMITTED) {
+        if(paymentEvent.getStatus() == PaymentStatus.SUCCEEDED) {
             kafkaTemplate.send("invoice-status-update-events", new InvoiceStatusUpdateEvent(paymentEvent.getInvoiceId(), InvoiceStatus.PAYED));
         }
     }

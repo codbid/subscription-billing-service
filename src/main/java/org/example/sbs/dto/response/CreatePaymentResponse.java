@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 public class CreatePaymentResponse {
     private Long id;
 
+    private String paymentId;
+
     private CreateInvoiceResponse invoice;
 
     private String paymentMethod;
@@ -17,4 +19,6 @@ public class CreatePaymentResponse {
     private String status;
 
     private LocalDateTime createdAt;
+
+    private String paymentUrl;
 }

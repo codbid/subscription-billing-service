@@ -11,10 +11,12 @@ CREATE TABLE invoices
 CREATE TABLE payments
 (
     id         BIGSERIAL PRIMARY KEY,
+    payment_id VARCHAR(255),
     invoice_id BIGINT                                       NOT NULL,
     payment_method VARCHAR(255)                             NOT NULL,
     status     VARCHAR(255)                                 NOT NULL,
-    created_at TIMESTAMP WITHOUT TIME ZONE                  NOT NULL
+    created_at TIMESTAMP WITHOUT TIME ZONE                  NOT NULL,
+    idempotence_key VARCHAR(255)                            NOT NULL
 );
 
 CREATE TABLE plans

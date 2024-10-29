@@ -24,6 +24,7 @@ public class SubscriptionMapper {
                 .orElseThrow(() -> new RuntimeException("User with id: " + request.getOwnerId() + " not found"));
         Plan plan = planRepository.findById(request.getPlanId())
                 .orElseThrow(() -> new RuntimeException("Plan with id: " + request.getPlanId() + " not found"));
+        owner.setSubscription(subscription);
         subscription.setOwner(owner);
         subscription.setPlan(plan);
         return subscription;

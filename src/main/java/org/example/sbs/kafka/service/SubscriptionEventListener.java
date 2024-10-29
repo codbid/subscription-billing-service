@@ -5,6 +5,7 @@ import org.example.sbs.enums.SubscriptionStatus;
 import org.example.sbs.kafka.events.*;
 import org.example.sbs.model.Subscription;
 import org.example.sbs.repository.SubscriptionRepository;
+import org.example.sbs.repository.UserRepository;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -16,11 +17,12 @@ import java.time.LocalDate;
 public class SubscriptionEventListener {
     private final KafkaTemplate<String, Object> kafkaTemplate;
     private final SubscriptionRepository subscriptionRepository;
+    private final UserRepository userRepository;
 
     @KafkaListener(topics = "subscription-status-update-events", groupId = "default", containerFactory = "kafkaListenerContainerFactory")
     public void listenStatusUpdateEvent(SubscriptionStatusUpdateEvent event) {
         Subscription subscription = subscriptionRepository.findById(event.getSubscriptionId())
-                .orElseThrow(() -> new RuntimeException("Invoice not found"));
+                .orElseThrow(() -> new RuntimeException("Subscription not found"));
         if(event.getStatus() == SubscriptionStatus.PAUSED)
             kafkaTemplate.send("subscription-paused-events", new SubscriptionPausedEvent(subscription.getId()));
         else if(event.getStatus() == SubscriptionStatus.ACTIVE)

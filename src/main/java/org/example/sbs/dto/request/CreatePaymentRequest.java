@@ -9,6 +9,4 @@ public class CreatePaymentRequest {
     private Long invoiceId;
 
     private String paymentMethod;
-
-    private String status;
 }

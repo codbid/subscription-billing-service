@@ -18,6 +18,9 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
+    private String paymentId;
+
     @ManyToOne
     @JoinColumn(name = "invoice_id")
     private Invoice invoice;
@@ -33,5 +36,6 @@ public class Payment {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-
+    @Column(name = "idempotence_key", nullable = false)
+    private String idempotenceKey;
 }
