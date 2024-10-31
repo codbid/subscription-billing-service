@@ -1,5 +1,6 @@
 package org.example.sbs.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.sbs.dto.request.CreatePaymentRequest;
 import org.example.sbs.dto.response.CreatePaymentResponse;
@@ -16,7 +17,7 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     @PostMapping
-    public ResponseEntity<CreatePaymentResponse> createPayment(@RequestBody CreatePaymentRequest request) {
+    public ResponseEntity<CreatePaymentResponse> createPayment(@Valid @RequestBody CreatePaymentRequest request) {
         return ResponseEntity.ok(paymentService.createPayment(request));
     }
 

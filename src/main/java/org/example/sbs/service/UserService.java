@@ -3,6 +3,8 @@ package org.example.sbs.service;
 import lombok.RequiredArgsConstructor;
 import org.example.sbs.dto.request.CreateUserRequest;
 import org.example.sbs.dto.response.CreateUserResponse;
+import org.example.sbs.exception.NotFoundException;
+import org.example.sbs.exception.enums.ExceptionMessage;
 import org.example.sbs.mapper.UserMapper;
 import org.example.sbs.model.Subscription;
 import org.example.sbs.model.User;
@@ -26,14 +28,14 @@ public class UserService {
 
     public CreateUserResponse createUser(CreateUserRequest request, Long subscriptionId) {
         Subscription subscription = subscriptionRepository.findById(subscriptionId)
-                .orElseThrow(() -> new RuntimeException("Subscription with id: " + subscriptionId + " not found"));
+                .orElseThrow(() -> new NotFoundException(ExceptionMessage.ENTITY_NOT_FOUND.generateNotFoundEntityMessage("Subscription", subscriptionId)));
         User savedUser = userRepository.save(userMapper.toUser(request, subscription));
         return userMapper.toCreateUserResponse(savedUser);
     }
 
     public CreateUserResponse getUserById(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User with id: " + id + " not found"));
+                .orElseThrow(() -> new NotFoundException(ExceptionMessage.ENTITY_NOT_FOUND.generateNotFoundEntityMessage("User", id)));
         return userMapper.toCreateUserResponse(user);
     }
 
@@ -45,7 +47,7 @@ public class UserService {
 
     public CreateUserResponse updateUser(Long id, CreateUserRequest request) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User with id: " + id + " not found"));
+                .orElseThrow(() -> new NotFoundException(ExceptionMessage.ENTITY_NOT_FOUND.generateNotFoundEntityMessage("User", id)));
         User newUser = userMapper.toUser(request);
         newUser.setId(id);
         newUser.setSubscription(user.getSubscription());
@@ -54,7 +56,7 @@ public class UserService {
 
     public void deleteUser(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User with id: " + id + " not found"));
+                .orElseThrow(() -> new NotFoundException(ExceptionMessage.ENTITY_NOT_FOUND.generateNotFoundEntityMessage("User", id)));
         userRepository.delete(user);
     }
 }

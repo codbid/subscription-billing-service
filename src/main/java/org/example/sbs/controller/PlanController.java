@@ -1,5 +1,6 @@
 package org.example.sbs.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.sbs.dto.request.CreatePlanRequest;
 import org.example.sbs.dto.response.CreatePlanResponse;
@@ -16,7 +17,7 @@ public class PlanController {
     private final PlanService planService;
 
     @PostMapping
-    public ResponseEntity<CreatePlanResponse> createPlan(CreatePlanRequest request) {
+    public ResponseEntity<CreatePlanResponse> createPlan(@Valid @RequestBody CreatePlanRequest request) {
         return ResponseEntity.ok(planService.createPlan(request));
     }
 
@@ -31,7 +32,7 @@ public class PlanController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CreatePlanResponse> updatePlan(@PathVariable Long id, CreatePlanRequest request) {
+    public ResponseEntity<CreatePlanResponse> updatePlan(@PathVariable Long id, @Valid @RequestBody CreatePlanRequest request) {
         return ResponseEntity.ok(planService.updatePlan(id, request));
     }
 

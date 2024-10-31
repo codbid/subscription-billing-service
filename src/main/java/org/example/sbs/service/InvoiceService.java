@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.example.sbs.dto.request.CreateInvoiceRequest;
 import org.example.sbs.dto.response.CreateInvoiceResponse;
 import org.example.sbs.enums.InvoiceStatus;
+import org.example.sbs.exception.NotFoundException;
+import org.example.sbs.exception.enums.ExceptionMessage;
 import org.example.sbs.mapper.InvoiceMapper;
 import org.example.sbs.model.Invoice;
 import org.example.sbs.repository.InvoiceRepository;
@@ -27,7 +29,7 @@ public class InvoiceService {
 
     public CreateInvoiceResponse getInvoiceById(Long id) {
         Invoice invoice = invoiceRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Invoice with id: " + id + " not found"));
+                .orElseThrow(() -> new NotFoundException(ExceptionMessage.ENTITY_NOT_FOUND.generateNotFoundEntityMessage("Invoice", id)));
         return invoiceMapper.toCreateInvoiceResponse(invoice);
     }
 

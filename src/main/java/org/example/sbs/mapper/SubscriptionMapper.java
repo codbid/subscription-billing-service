@@ -3,6 +3,8 @@ package org.example.sbs.mapper;
 import lombok.RequiredArgsConstructor;
 import org.example.sbs.dto.request.CreateSubscriptionRequest;
 import org.example.sbs.dto.response.CreateSubscriptionResponse;
+import org.example.sbs.exception.NotFoundException;
+import org.example.sbs.exception.enums.ExceptionMessage;
 import org.example.sbs.model.Plan;
 import org.example.sbs.model.Subscription;
 import org.example.sbs.model.User;
@@ -21,9 +23,9 @@ public class SubscriptionMapper {
     public Subscription toSubscription(CreateSubscriptionRequest request) {
         Subscription subscription = new Subscription();
         User owner = userRepository.findById(request.getOwnerId())
-                .orElseThrow(() -> new RuntimeException("User with id: " + request.getOwnerId() + " not found"));
+                .orElseThrow(() ->  new NotFoundException(ExceptionMessage.ENTITY_NOT_FOUND.generateNotFoundEntityMessage("User", request.getOwnerId())));
         Plan plan = planRepository.findById(request.getPlanId())
-                .orElseThrow(() -> new RuntimeException("Plan with id: " + request.getPlanId() + " not found"));
+                .orElseThrow(() ->  new NotFoundException(ExceptionMessage.ENTITY_NOT_FOUND.generateNotFoundEntityMessage("Plan", request.getPlanId())));
         owner.setSubscription(subscription);
         subscription.setOwner(owner);
         subscription.setPlan(plan);

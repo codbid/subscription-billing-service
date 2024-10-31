@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.example.sbs.dto.request.CreateSubscriptionRequest;
 import org.example.sbs.dto.response.CreateSubscriptionResponse;
 import org.example.sbs.enums.SubscriptionStatus;
+import org.example.sbs.exception.NotFoundException;
+import org.example.sbs.exception.enums.ExceptionMessage;
 import org.example.sbs.kafka.events.SubscriptionCreatedEvent;
 import org.example.sbs.kafka.events.SubscriptionStatusUpdateEvent;
 import org.example.sbs.kafka.service.SubscriptionEventProducer;
@@ -33,7 +35,7 @@ public class SubscriptionService {
 
     public CreateSubscriptionResponse getSubscriptionById(Long id) {
         Subscription subscription = subscriptionRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Subscription with id: " + id + " not found"));
+                .orElseThrow(() -> new NotFoundException(ExceptionMessage.ENTITY_NOT_FOUND.generateNotFoundEntityMessage("Subscription", id)));
         return subscriptionMapper.toCreateSubscriptionResponse(subscription);
     }
 
@@ -45,7 +47,7 @@ public class SubscriptionService {
 
     public CreateSubscriptionResponse updateSubscription(Long id, CreateSubscriptionRequest request) {
         Subscription subscription = subscriptionRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Subscription with id: " + id + " not found"));
+                .orElseThrow(() -> new NotFoundException(ExceptionMessage.ENTITY_NOT_FOUND.generateNotFoundEntityMessage("Subscription", id)));
         Subscription newSubscription = subscriptionMapper.toSubscription(request);
         newSubscription.setId(subscription.getId());
         return subscriptionMapper.toCreateSubscriptionResponse(subscriptionRepository.save(newSubscription));
@@ -53,7 +55,7 @@ public class SubscriptionService {
 
     public void deleteSubscription(Long id) {
         Subscription subscription = subscriptionRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Subscription with id: " + id + " not found"));
+                .orElseThrow(() -> new NotFoundException(ExceptionMessage.ENTITY_NOT_FOUND.generateNotFoundEntityMessage("Subscription", id)));
         subscriptionRepository.delete(subscription);
     }
 

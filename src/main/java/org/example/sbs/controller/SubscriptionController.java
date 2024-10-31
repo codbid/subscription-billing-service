@@ -1,5 +1,6 @@
 package org.example.sbs.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.sbs.dto.request.CreateSubscriptionRequest;
 import org.example.sbs.dto.response.CreateSubscriptionResponse;
@@ -16,7 +17,7 @@ public class SubscriptionController {
     private final SubscriptionService subscriptionService;
 
     @PostMapping
-    public ResponseEntity<CreateSubscriptionResponse> createSubscription(@RequestBody CreateSubscriptionRequest request) {
+    public ResponseEntity<CreateSubscriptionResponse> createSubscription(@Valid @RequestBody CreateSubscriptionRequest request) {
         return ResponseEntity.ok(subscriptionService.createSubscription(request));
     }
 
@@ -31,7 +32,7 @@ public class SubscriptionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CreateSubscriptionResponse> updateSubscription(@PathVariable Long id, @RequestBody CreateSubscriptionRequest request) {
+    public ResponseEntity<CreateSubscriptionResponse> updateSubscription(@PathVariable Long id, @Valid @RequestBody CreateSubscriptionRequest request) {
         return ResponseEntity.ok(subscriptionService.updateSubscription(id, request));
     }
 

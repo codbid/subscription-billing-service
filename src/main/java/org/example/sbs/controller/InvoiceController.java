@@ -1,5 +1,6 @@
     package org.example.sbs.controller;
 
+    import jakarta.validation.Valid;
     import lombok.RequiredArgsConstructor;
     import org.example.sbs.dto.request.CreateInvoiceRequest;
     import org.example.sbs.dto.response.CreateInvoiceResponse;
@@ -16,7 +17,7 @@
         private final InvoiceService invoiceService;
 
         @PostMapping
-        public ResponseEntity<CreateInvoiceResponse> createInvoice(@RequestBody CreateInvoiceRequest request) {
+        public ResponseEntity<CreateInvoiceResponse> createInvoice(@Valid @RequestBody CreateInvoiceRequest request) {
             return ResponseEntity.ok(invoiceService.createInvoice(request));
         }
 

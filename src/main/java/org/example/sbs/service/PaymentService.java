@@ -5,6 +5,8 @@ import org.example.sbs.dto.request.CreatePaymentRequest;
 import org.example.sbs.dto.response.CreatePaymentResponse;
 import org.example.sbs.enums.PaymentStatus;
 import org.example.sbs.enums.SubscriptionStatus;
+import org.example.sbs.exception.NotFoundException;
+import org.example.sbs.exception.enums.ExceptionMessage;
 import org.example.sbs.kafka.events.PaymentEvent;
 import org.example.sbs.kafka.events.SubscriptionStatusUpdateEvent;
 import org.example.sbs.kafka.service.PaymentEventProducer;
@@ -40,7 +42,7 @@ public class PaymentService {
 
     public CreatePaymentResponse getPaymentById(Long id) {
         Payment payment = paymentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Payment with id: " + id + " not found"));
+                .orElseThrow(() -> new NotFoundException(ExceptionMessage.ENTITY_NOT_FOUND.generateNotFoundEntityMessage("Payment", id)));
         return paymentMapper.toCreatePaymentResponse(payment);
     }
 
