@@ -16,5 +16,10 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface EnumValidator {
     Class<? extends Enum<?>> enumClass();
+
     String message() default "Значение должно соответствовать одному из значений перечисления";
+
+    Class<?>[] groups() default {};
+
+    Class<? extends Payload>[] payload() default {};
 }

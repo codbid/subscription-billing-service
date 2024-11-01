@@ -6,4 +6,12 @@ INSERT INTO subscriptions(owner_id, plan_id, status) VALUES (1, 1, 'INACTIVE');
 
 INSERT INTO plans(name, description, price, billing_cycle, max_users) VALUES ('Test 1 for 1m', 'Test sub', 998, 'MONTHLY', 10);
 
-INSERT INTO users(subscription_id, login, name, email, password) VALUES (1, 'admin', 'admin', 'admin@gmail.com', 'admin');
+INSERT INTO users(subscription_id, login, name, email, password) VALUES (1, 'admin', 'admin', 'admin@gmail.com', '$2a$12$7bm52CEAOmLGDdHzlo9ZFulaFzejGYHqxOfFeSNYxv.jEAMTK5WXa');
+
+INSERT INTO roles(name) VALUES ('USER');
+
+INSERT INTO roles(name) VALUES ('ADMIN');
+
+insert into users_roles(user_id, role_id) VALUES (1, 1);
+
+insert into users_roles(user_id, role_id) VALUES (1, 2);

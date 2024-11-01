@@ -49,3 +49,16 @@ CREATE TABLE users
     password        VARCHAR(255)                            NOT NULL,
     CONSTRAINT uniq_email UNIQUE(email)
 );
+
+CREATE TABLE roles
+(
+    id         BIGSERIAL PRIMARY KEY,
+    name       VARCHAR(255)                                 NOT NULL,
+    CONSTRAINT uniq_name UNIQUE(name)
+);
+
+CREATE TABLE users_roles(
+    user_id BIGINT                                          NOT NULL,
+    role_id BIGINT                                          NOT NULL,
+    constraint User_Roles_pk PRIMARY KEY(user_id, role_id)
+);
