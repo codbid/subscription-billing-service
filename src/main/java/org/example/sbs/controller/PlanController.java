@@ -31,7 +31,7 @@ public class PlanController {
             tags = {"Plans", "ADMIN"}
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Plan created successful",
+            @ApiResponse(responseCode = "200", description = "Plan created successful",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = CreatePlanResponse.class))),
             @ApiResponse(responseCode = "400", description = "Bad request",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponseExample.class)))
@@ -82,7 +82,7 @@ public class PlanController {
             }
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Plan updated successful",
+            @ApiResponse(responseCode = "200", description = "Plan updated successful",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = CreatePlanResponse.class))),
             @ApiResponse(responseCode = "400", description = "Bad request",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponseExample.class))),

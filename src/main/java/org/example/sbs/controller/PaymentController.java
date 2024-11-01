@@ -29,7 +29,7 @@ public class PaymentController {
             tags = {"Payments", "USER"}
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Payment created successful",
+            @ApiResponse(responseCode = "200", description = "Payment created successful",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = CreatePaymentResponse.class))),
             @ApiResponse(responseCode = "400", description = "Bad request",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponseExample.class)))

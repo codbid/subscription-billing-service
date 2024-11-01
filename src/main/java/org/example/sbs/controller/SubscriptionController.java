@@ -31,7 +31,7 @@ public class SubscriptionController {
             tags = {"Subscriptions", "USER"}
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Subscription created successful",
+            @ApiResponse(responseCode = "200", description = "Subscription created successful",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = CreateSubscriptionResponse.class))),
             @ApiResponse(responseCode = "400", description = "Bad request",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponseExample.class)))
@@ -81,7 +81,7 @@ public class SubscriptionController {
             }
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Subscription updated successful",
+            @ApiResponse(responseCode = "200", description = "Subscription updated successful",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = CreateSubscriptionResponse.class))),
             @ApiResponse(responseCode = "400", description = "Bad request",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponseExample.class))),

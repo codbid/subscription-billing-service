@@ -31,7 +31,7 @@
                 tags = {"Invoices", "USER"}
         )
         @ApiResponses(value = {
-                @ApiResponse(responseCode = "201", description = "Invoice created successful",
+                @ApiResponse(responseCode = "200", description = "Invoice created successful",
                         content = @Content(mediaType = "application/json", schema = @Schema(implementation = CreateInvoiceResponse.class))),
                 @ApiResponse(responseCode = "400", description = "Bad request",
                         content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponseExample.class)))

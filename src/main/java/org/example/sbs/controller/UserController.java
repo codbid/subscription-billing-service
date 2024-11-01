@@ -35,7 +35,7 @@ public class UserController {
             }
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "User created successful",
+            @ApiResponse(responseCode = "200", description = "User created successful",
                     content = @Content(schema = @Schema(implementation = CreateUserResponse.class))),
             @ApiResponse(responseCode = "400", description = "Bad request",
                     content = @Content(schema = @Schema(implementation = ExceptionResponseExample.class))),
@@ -87,7 +87,7 @@ public class UserController {
             }
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "User updated successful",
+            @ApiResponse(responseCode = "200", description = "User updated successful",
                     content = @Content(schema = @Schema(implementation = CreateUserResponse.class))),
             @ApiResponse(responseCode = "400", description = "Bad request",
                     content = @Content(schema = @Schema(implementation = ExceptionResponseExample.class))),
@@ -131,7 +131,7 @@ public class UserController {
             }
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Role added successful",
+            @ApiResponse(responseCode = "200", description = "Role added successful",
                     content = @Content(schema = @Schema())),
             @ApiResponse(responseCode = "401", description = "Does not have access rights",
                     content = @Content(schema = @Schema(implementation = ExceptionResponseExample.class))),
@@ -152,7 +152,7 @@ public class UserController {
             }
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Role removed successful",
+            @ApiResponse(responseCode = "200", description = "Role removed successful",
                     content = @Content(schema = @Schema())),
             @ApiResponse(responseCode = "401", description = "Does not have access rights",
                     content = @Content(schema = @Schema(implementation = ExceptionResponseExample.class))),
