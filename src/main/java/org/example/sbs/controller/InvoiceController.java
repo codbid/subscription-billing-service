@@ -22,7 +22,6 @@
     @RestController
     @RequiredArgsConstructor
     @RequestMapping("/api/invoices")
-    @Tag(name = "Invoice controller", description = "Invoices management")
     public class InvoiceController {
         private final InvoiceService invoiceService;
 

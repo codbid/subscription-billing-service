@@ -28,7 +28,22 @@ public class UserController {
     private final UserService userService;
 
     @Operation(
-            summary = "User creation with addition to subscription (optional)",
+            summary = "User creation",
+            tags = {"Users", "USER"}
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User created successful",
+                    content = @Content(schema = @Schema(implementation = CreateUserResponse.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(schema = @Schema(implementation = ExceptionResponseExample.class))),
+    })
+    @PostMapping
+    public ResponseEntity<CreateUserResponse> createUser(@Valid @RequestBody CreateUserRequest request) {
+        return ResponseEntity.ok(userService.createUser(request, 0L));
+    }
+
+    @Operation(
+            summary = "User creation with addition to subscription",
             tags = {"Users", "Subscriptions", "ADMIN"},
             parameters = {
                     @Parameter(name = "subscription_id", description = "Subscription id")
@@ -43,9 +58,9 @@ public class UserController {
                     content = @Content(schema = @Schema(implementation = ExceptionResponseExample.class)))
     })
     @PreAuthorize("hasAuthority('ADMIN')")
-    @PostMapping
-    public ResponseEntity<CreateUserResponse> createUser(@RequestParam(defaultValue = "0", name = "subscription_id") Long subscriptionId, @RequestBody CreateUserRequest request) {
-        return ResponseEntity.ok(userService.createUser(request, subscriptionId));
+    @PostMapping("/{subscription_id}")
+    public ResponseEntity<CreateUserResponse> createUserAndSubscribe(@PathVariable Long subscription_id, @RequestBody CreateUserRequest request) {
+        return ResponseEntity.ok(userService.createUser(request, subscription_id));
     }
 
     @Operation(
