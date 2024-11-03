@@ -1,14 +1,12 @@
 package org.example.sbs.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.example.sbs.dto.request.LoginRequest;
-import org.example.sbs.dto.response.CreateInvoiceResponse;
 import org.example.sbs.dto.response.LoginResponse;
 import org.example.sbs.exception.ExceptionResponseExample;
 import org.example.sbs.service.AuthService;

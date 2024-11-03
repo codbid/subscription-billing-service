@@ -3,10 +3,8 @@ package org.example.sbs.security.jwt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import jakarta.persistence.Column;
 import org.springframework.stereotype.Component;
 
-import java.security.SecureRandom;
 import java.util.*;
 
 @Component

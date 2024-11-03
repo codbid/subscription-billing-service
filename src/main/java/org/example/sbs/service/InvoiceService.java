@@ -49,18 +49,4 @@ public class InvoiceService {
                 .filter(invoice -> invoice.getSubscription().getId().equals(TenantContext.getCurrentTenantId()))
                 .toList();
     }
-//
-//    public CreateInvoiceResponse updateInvoice(Long id, CreateInvoiceRequest request) {
-//        Invoice invoice = invoiceRepository.findById(id)
-//                .orElseThrow(() -> new RuntimeException("Invoice with id: " + id + " not found"));
-//        Invoice newInvoice = invoiceMapper.toInvoice(request);
-//        newInvoice.setId(invoice.getId());
-//        return invoiceMapper.toCreateInvoiceResponse((invoiceRepository.save(newInvoice)));
-//    }
-//
-//    public void deleteInvoice(Long id) {
-//        Invoice invoice = invoiceRepository.findById(id)
-//                .orElseThrow(() -> new RuntimeException("Invoice with id: " + id + " not found"));
-//        invoiceRepository.delete(invoice);
-//    }
 }

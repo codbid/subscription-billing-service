@@ -5,7 +5,6 @@ import org.example.sbs.dto.request.LoginRequest;
 import org.example.sbs.dto.response.LoginResponse;
 import org.example.sbs.security.UserDetailsImpl;
 import org.example.sbs.security.jwt.JwtUtil;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

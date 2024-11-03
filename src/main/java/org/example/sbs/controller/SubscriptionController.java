@@ -9,8 +9,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.sbs.dto.request.CreateSubscriptionRequest;
-import org.example.sbs.dto.response.CreatePaymentResponse;
-import org.example.sbs.dto.response.CreatePlanResponse;
 import org.example.sbs.dto.response.CreateSubscriptionResponse;
 import org.example.sbs.exception.ExceptionResponseExample;
 import org.example.sbs.security.UserDetailsImpl;

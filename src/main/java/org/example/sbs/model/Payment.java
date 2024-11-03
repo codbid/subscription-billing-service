@@ -6,7 +6,6 @@ import lombok.Setter;
 import org.example.sbs.enums.PaymentMethod;
 import org.example.sbs.enums.PaymentStatus;
 
-
 import java.time.LocalDateTime;
 
 @Entity

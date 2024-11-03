@@ -2,7 +2,6 @@ package org.example.sbs.security;
 
 import lombok.RequiredArgsConstructor;
 import org.example.sbs.exception.NotFoundException;
-import org.example.sbs.exception.enums.ExceptionMessage;
 import org.example.sbs.model.User;
 import org.example.sbs.repository.UserRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

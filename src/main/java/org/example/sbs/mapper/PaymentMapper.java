@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.example.sbs.dto.request.CreatePaymentRequest;
 import org.example.sbs.dto.response.CreatePaymentResponse;
 import org.example.sbs.enums.PaymentMethod;
-import org.example.sbs.enums.PaymentStatus;
 import org.example.sbs.model.Invoice;
 import org.example.sbs.model.Payment;
 import org.example.sbs.repository.InvoiceRepository;

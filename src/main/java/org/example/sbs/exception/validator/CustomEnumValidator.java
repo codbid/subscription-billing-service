@@ -3,7 +3,6 @@ package org.example.sbs.exception.validator;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class CustomEnumValidator implements ConstraintValidator<EnumValidator, String> {
