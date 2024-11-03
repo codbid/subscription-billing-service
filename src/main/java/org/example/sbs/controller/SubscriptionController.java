@@ -13,9 +13,11 @@ import org.example.sbs.dto.response.CreatePaymentResponse;
 import org.example.sbs.dto.response.CreatePlanResponse;
 import org.example.sbs.dto.response.CreateSubscriptionResponse;
 import org.example.sbs.exception.ExceptionResponseExample;
+import org.example.sbs.security.UserDetailsImpl;
 import org.example.sbs.service.SubscriptionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,8 +39,8 @@ public class SubscriptionController {
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponseExample.class)))
     })
     @PostMapping
-    public ResponseEntity<CreateSubscriptionResponse> createSubscription(@Valid @RequestBody CreateSubscriptionRequest request) {
-        return ResponseEntity.ok(subscriptionService.createSubscription(request));
+    public ResponseEntity<CreateSubscriptionResponse> createSubscription(@Valid @RequestBody CreateSubscriptionRequest request, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return ResponseEntity.ok(subscriptionService.createSubscription(request, userDetails));
     }
 
     @Operation(
@@ -62,12 +64,13 @@ public class SubscriptionController {
 
     @Operation(
             summary = "Get all subscriptions",
-            tags = {"Subscriptions", "USER"}
+            tags = {"Subscriptions", "SUPER_ADMIN"}
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Subscriptions received successful",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = CreateSubscriptionResponse.class)))
     })
+    @PreAuthorize("hasAuthority('SUPER_ADMIN')")
     @GetMapping
     public ResponseEntity<List<CreateSubscriptionResponse>> getAllSubscriptions() {
         return ResponseEntity.ok(subscriptionService.getAllSubscriptions());
@@ -75,7 +78,7 @@ public class SubscriptionController {
 
     @Operation(
             summary = "Update subscription by id",
-            tags = {"Subscriptions", "ADMIN"},
+            tags = {"Subscriptions", "OWNER"},
             parameters = {
                     @Parameter(name = "id", description = "Subscription id", required = true)
             }
@@ -90,7 +93,7 @@ public class SubscriptionController {
             @ApiResponse(responseCode = "404", description = "Subscription not found",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponseExample.class))),
     })
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('OWNER')")
     @PutMapping("/{id}")
     public ResponseEntity<CreateSubscriptionResponse> updateSubscription(@PathVariable Long id, @Valid @RequestBody CreateSubscriptionRequest request) {
         return ResponseEntity.ok(subscriptionService.updateSubscription(id, request));
@@ -98,7 +101,7 @@ public class SubscriptionController {
 
     @Operation(
             summary = "Delete subscription by id",
-            tags = {"Subscriptions", "ADMIN"},
+            tags = {"Subscriptions", "OWNER"},
             parameters = {
                     @Parameter(name = "id", description = "Subscription id", required = true)
             }
@@ -111,7 +114,7 @@ public class SubscriptionController {
             @ApiResponse(responseCode = "404", description = "Subscription not found",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponseExample.class))),
     })
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('OWNER')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSubscription(@PathVariable Long id) {
         subscriptionService.deleteSubscription(id);
@@ -120,7 +123,7 @@ public class SubscriptionController {
 
     @Operation(
             summary = "Pause subscription by id",
-            tags = {"Subscriptions", "ADMIN"},
+            tags = {"Subscriptions", "OWNER"},
             parameters = {
                     @Parameter(name = "id", description = "Subscription id", required = true)
             }
@@ -133,7 +136,7 @@ public class SubscriptionController {
             @ApiResponse(responseCode = "404", description = "Subscription not found",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponseExample.class))),
     })
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('OWNER')")
     @PostMapping("/pause/{id}")
     public void pause(@PathVariable Long id) {
         subscriptionService.pauseSubscription(id);
@@ -141,7 +144,7 @@ public class SubscriptionController {
 
     @Operation(
             summary = "Activate subscription by id",
-            tags = {"Subscriptions", "ADMIN"},
+            tags = {"Subscriptions", "SUPER_ADMIN"},
             parameters = {
                     @Parameter(name = "id", description = "Subscription id", required = true)
             }
@@ -154,7 +157,7 @@ public class SubscriptionController {
             @ApiResponse(responseCode = "404", description = "Subscription not found",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponseExample.class))),
     })
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('SUPER_ADMIN')")
     @PostMapping("/activate/{id}")
     public void activate(@PathVariable Long id) {
         subscriptionService.resumeSubscription(id);

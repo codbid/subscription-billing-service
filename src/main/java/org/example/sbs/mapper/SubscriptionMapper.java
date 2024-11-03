@@ -20,10 +20,10 @@ public class SubscriptionMapper {
     private final UserMapper userMapper;
     private final PlanMapper planMapper;
 
-    public Subscription toSubscription(CreateSubscriptionRequest request) {
+    public Subscription toSubscription(CreateSubscriptionRequest request, Long ownerId) {
         Subscription subscription = new Subscription();
-        User owner = userRepository.findById(request.getOwnerId())
-                .orElseThrow(() ->  new NotFoundException(ExceptionMessage.ENTITY_NOT_FOUND.generateNotFoundEntityMessage("User", request.getOwnerId())));
+        User owner = userRepository.findById(ownerId)
+                .orElseThrow(() ->  new NotFoundException(ExceptionMessage.ENTITY_NOT_FOUND.generateNotFoundEntityMessage("User", ownerId)));
         Plan plan = planRepository.findById(request.getPlanId())
                 .orElseThrow(() ->  new NotFoundException(ExceptionMessage.ENTITY_NOT_FOUND.generateNotFoundEntityMessage("Plan", request.getPlanId())));
         owner.setSubscription(subscription);

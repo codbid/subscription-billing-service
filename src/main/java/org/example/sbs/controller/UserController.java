@@ -8,15 +8,15 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.example.sbs.dto.request.AddRoleReuqest;
+import org.example.sbs.dto.request.AddRoleRequest;
 import org.example.sbs.dto.request.CreateUserRequest;
-import org.example.sbs.dto.response.CreatePaymentResponse;
-import org.example.sbs.dto.response.CreatePlanResponse;
 import org.example.sbs.dto.response.CreateUserResponse;
 import org.example.sbs.exception.ExceptionResponseExample;
+import org.example.sbs.security.UserDetailsImpl;
 import org.example.sbs.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public class UserController {
 
     @Operation(
             summary = "User creation with addition to subscription (optional)",
-            tags = {"Users", "Subscriptions"},
+            tags = {"Users", "Subscriptions", "ADMIN"},
             parameters = {
                     @Parameter(name = "subscription_id", description = "Subscription id")
             }
@@ -42,8 +42,9 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "Subscription not found",
                     content = @Content(schema = @Schema(implementation = ExceptionResponseExample.class)))
     })
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping
-    public ResponseEntity<CreateUserResponse> createUser(@RequestParam(defaultValue = "null", name = "subscription_id") Long subscriptionId, @RequestBody CreateUserRequest request) {
+    public ResponseEntity<CreateUserResponse> createUser(@RequestParam(defaultValue = "0", name = "subscription_id") Long subscriptionId, @RequestBody CreateUserRequest request) {
         return ResponseEntity.ok(userService.createUser(request, subscriptionId));
     }
 
@@ -97,7 +98,7 @@ public class UserController {
                     content = @Content(schema = @Schema(implementation = ExceptionResponseExample.class))),
     })
     @PutMapping("/{id}")
-    public ResponseEntity<CreateUserResponse> updateUser(@PathVariable Long id, @Valid @RequestBody CreateUserRequest request) {
+    public ResponseEntity<CreateUserResponse> updateUser(@PathVariable Long id, @Valid @RequestBody CreateUserRequest request, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return ResponseEntity.ok(userService.updateUser(id, request));
     }
 
@@ -125,7 +126,7 @@ public class UserController {
 
     @Operation(
             summary = "Add role to user by id",
-            tags = {"Users", "Roles", "ADMIN"},
+            tags = {"Users", "Roles", "OWNER"},
             parameters = {
                     @Parameter(name = "id", description = "User id", required = true)
             }
@@ -138,15 +139,15 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "User or role not found",
                     content = @Content(schema = @Schema(implementation = ExceptionResponseExample.class))),
     })
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('OWNER')")
     @PutMapping("/{id}/role")
-    public ResponseEntity<CreateUserResponse> addRole(@PathVariable Long id, @Valid @RequestBody AddRoleReuqest request) {
+    public ResponseEntity<CreateUserResponse> addRole(@PathVariable Long id, @Valid @RequestBody AddRoleRequest request) {
         return ResponseEntity.ok(userService.addRole(id, request));
     }
 
     @Operation(
             summary = "Remove user role by id",
-            tags = {"Users", "Roles", "ADMIN"},
+            tags = {"Users", "Roles", "OWNER"},
             parameters = {
                     @Parameter(name = "id", description = "User id", required = true)
             }
@@ -159,9 +160,9 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "User or role not found",
                     content = @Content(schema = @Schema(implementation = ExceptionResponseExample.class))),
     })
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('OWNER')")
     @DeleteMapping("/{id}/role")
-    public ResponseEntity<CreateUserResponse> removeRole(@PathVariable Long id, @Valid @RequestBody AddRoleReuqest request) {
+    public ResponseEntity<CreateUserResponse> removeRole(@PathVariable Long id, @Valid @RequestBody AddRoleRequest request) {
         return ResponseEntity.ok(userService.removeRole(id, request));
     }
 }

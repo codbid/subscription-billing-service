@@ -1,5 +1,6 @@
 package org.example.sbs.controller.handler;
 
+import org.example.sbs.exception.ForbiddenException;
 import org.example.sbs.exception.NotFoundException;
 import org.example.sbs.exception.UnauthorizedException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -54,5 +55,14 @@ public class ExceptionControllerAdvice {
         response.put("errorMessage", exception.getMessage());
         response.put("timestamp", LocalDateTime.now().toString());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<Map<String, String>> dataIntegrityViolationExceptionHandler(ForbiddenException exception) {
+        Map<String, String> response = new HashMap<>();
+        response.put("errorCode", "403");
+        response.put("errorMessage", exception.getMessage());
+        response.put("timestamp", LocalDateTime.now().toString());
+        return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
     }
 }

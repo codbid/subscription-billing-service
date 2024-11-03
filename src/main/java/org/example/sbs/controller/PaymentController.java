@@ -26,7 +26,7 @@ public class PaymentController {
 
     @Operation(
             summary = "Payment creation",
-            tags = {"Payments", "USER"}
+            tags = {"Payments", "ADMIN"}
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Payment created successful",
@@ -34,6 +34,7 @@ public class PaymentController {
             @ApiResponse(responseCode = "400", description = "Bad request",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponseExample.class)))
     })
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping
     public ResponseEntity<CreatePaymentResponse> createPayment(@Valid @RequestBody CreatePaymentRequest request) {
         return ResponseEntity.ok(paymentService.createPayment(request));
@@ -41,7 +42,7 @@ public class PaymentController {
 
     @Operation(
             summary = "Get payment by then id",
-            tags = {"Payments", "USER"},
+            tags = {"Payments", "ADMIN"},
             parameters = {
                     @Parameter(name = "id", description = "Payment id", required = true)
             }
@@ -54,6 +55,7 @@ public class PaymentController {
             @ApiResponse(responseCode = "404", description = "Payment not found",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponseExample.class)))
     })
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<CreatePaymentResponse> getPaymentById(@PathVariable Long id) {
         return ResponseEntity.ok(paymentService.getPaymentById(id));
@@ -61,7 +63,7 @@ public class PaymentController {
 
     @Operation(
             summary = "Get all payments",
-            tags = {"Payments", "USER"}
+            tags = {"Payments", "ADMIN"}
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Payments received successful",
@@ -69,6 +71,7 @@ public class PaymentController {
             @ApiResponse(responseCode = "401", description = "Does not have access rights",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponseExample.class))),
     })
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
     public ResponseEntity<List<CreatePaymentResponse>> getAllPayments() {
         return ResponseEntity.ok(paymentService.getAllPayments());

@@ -12,6 +12,14 @@ INSERT INTO roles(name) VALUES ('USER');
 
 INSERT INTO roles(name) VALUES ('ADMIN');
 
+INSERT INTO roles(name) VALUES ('OWNER');
+
+INSERT INTO roles(name) VALUES ('SUPER_ADMIN');
+
 insert into users_roles(user_id, role_id) VALUES (1, 1);
 
 insert into users_roles(user_id, role_id) VALUES (1, 2);
+
+insert into users_roles(user_id, role_id) VALUES (1, 3);
+
+insert into users_roles(user_id, role_id) VALUES (1, 4);

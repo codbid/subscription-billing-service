@@ -13,6 +13,8 @@ public class UserDetailsImpl implements UserDetails {
     private final Long id;
     private final String username;
     private final String password;
+    @Getter
+    private final Long tenantId;
     private final Collection<? extends GrantedAuthority> authorities;
 
     @Override
@@ -35,4 +37,5 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() { return username; }
+
 }

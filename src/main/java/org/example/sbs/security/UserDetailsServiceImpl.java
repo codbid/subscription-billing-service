@@ -26,10 +26,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         List<SimpleGrantedAuthority> roles = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .toList();
+        Long tenantId = user.getSubscription() != null ? user.getSubscription().getId() : null;
 
         return UserDetailsImpl.builder().id(user.getId())
                 .username(user.getLogin())
                 .authorities(roles)
-                .password(user.getPassword()).build();
+                .password(user.getPassword())
+                .tenantId(tenantId).build();
     }
 }

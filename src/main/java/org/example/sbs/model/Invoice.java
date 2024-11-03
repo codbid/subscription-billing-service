@@ -36,6 +36,6 @@ public class Invoice {
     @Column(name = "created_date", nullable = false)
     private LocalDate createdDate;
 
-    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Payment> payments = new ArrayList<>();
 }

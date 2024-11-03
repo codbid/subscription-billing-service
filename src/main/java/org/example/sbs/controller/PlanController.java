@@ -28,7 +28,7 @@ public class PlanController {
 
     @Operation(
             summary = "Plan creation",
-            tags = {"Plans", "ADMIN"}
+            tags = {"Plans", "SUPER_ADMIN"}
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Plan created successful",
@@ -36,7 +36,7 @@ public class PlanController {
             @ApiResponse(responseCode = "400", description = "Bad request",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponseExample.class)))
     })
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('SUPER_ADMIN')")
     @PostMapping
     public ResponseEntity<CreatePlanResponse> createPlan(@Valid @RequestBody CreatePlanRequest request) {
         return ResponseEntity.ok(planService.createPlan(request));
@@ -76,7 +76,7 @@ public class PlanController {
 
     @Operation(
             summary = "Update plan by id",
-            tags = {"Plans", "ADMIN"},
+            tags = {"Plans", "SUPER_ADMIN"},
             parameters = {
                     @Parameter(name = "id", description = "Plan id", required = true)
             }
@@ -91,7 +91,7 @@ public class PlanController {
             @ApiResponse(responseCode = "404", description = "Plan not found",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponseExample.class))),
     })
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('SUPER_ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<CreatePlanResponse> updatePlan(@PathVariable Long id, @Valid @RequestBody CreatePlanRequest request) {
         return ResponseEntity.ok(planService.updatePlan(id, request));
@@ -99,7 +99,7 @@ public class PlanController {
 
     @Operation(
             summary = "Delete plan by id",
-            tags = {"Plans", "ADMIN"},
+            tags = {"Plans", "SUPER_ADMIN"},
             parameters = {
                     @Parameter(name = "id", description = "Plan id", required = true)
             }
@@ -112,7 +112,7 @@ public class PlanController {
             @ApiResponse(responseCode = "404", description = "Plan not found",
                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponseExample.class))),
     })
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('SUPER_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePlan(@PathVariable Long id) {
         planService.deletePlan(id);
