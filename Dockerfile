@@ -14,6 +14,6 @@ FROM openjdk:21
 
 WORKDIR /app
 
-COPY --from=build /app/target/sbs-0.0.1-SNAPSHOT.jar /app/sbs.jar
+COPY --from=build /app/target/subscription-billing-service-0.0.1-SNAPSHOT.jar /app/sbs.jar
 
 ENTRYPOINT ["java", "-jar", "/app/sbs.jar"]
